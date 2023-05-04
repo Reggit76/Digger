@@ -5,12 +5,14 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600), "Digger");
     // Создание спрайта фона и его текстуры
     sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("background.png");
+    backgroundTexture.loadFromFile("img/background.png");
     sf::Sprite background(backgroundTexture);
     // Создание спрайта игрока и его текстуры
-    sf::Texture playerTexture;
-    playerTexture.loadFromFile("player.png");
-    sf::Sprite player(playerTexture);
+    sf::Texture playerTexture_l;
+    playerTexture_l.loadFromFile("img/player_l.png");
+    sf::Texture playerTexture_r;
+    playerTexture_r.loadFromFile("img/player_r.png");
+    sf::Sprite player(playerTexture_l);
     float playerX = 400.0f;
     float playerY = 300.0f;
     player.setPosition(playerX, playerY);
@@ -33,10 +35,12 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
             playerX -= gridSize;
+            sf::Sprite player(playerTexture_l);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         {
             playerX += gridSize;
+            sf::Sprite player(playerTexture_r);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         {
