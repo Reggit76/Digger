@@ -1,5 +1,5 @@
 #include <iostream>
-#pragma onse///запускает программу один раз
+#pragma once///запускает программу один раз
 using namespace std;
 
 class Entiti {
