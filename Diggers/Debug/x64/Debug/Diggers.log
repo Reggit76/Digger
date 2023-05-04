@@ -1,0 +1,4 @@
+﻿  main.cpp
+D:\Diggers\Diggers\main.cpp(21,43): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+D:\Diggers\Diggers\main.cpp(21,32): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+  Diggers.vcxproj -> D:\Diggers\Diggers\x64\Debug\Diggers.exe
