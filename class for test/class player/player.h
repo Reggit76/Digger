@@ -23,21 +23,22 @@ private:
     bool m_UpPressed;
     bool m_DownPressed;
  
-    // Скорость Боба в пикселях в секунду
+    // Скорость игрока в пикселях в секунду
     float m_Speed;
     ///hp
     float hp;
     // Открытые методы
 public:
  
-    // Настраиваем Боба в конструкторе
+    // Настраиваем игрока в конструкторе
     Player();
+    /// геты и сеты для хп
     float get_hp();
     void set_hp(float hp);
     // Для отправки спрайта в главную функцию
     Sprite getSprite();
  
-    // Для движения Боба
+    // Для движения игрока
     void moveLeft();
     void moveUp();
     void moveDown();
