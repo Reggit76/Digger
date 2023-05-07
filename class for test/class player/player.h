@@ -25,13 +25,15 @@ private:
  
     // Скорость Боба в пикселях в секунду
     float m_Speed;
- 
+    ///hp
+    float hp;
     // Открытые методы
 public:
  
     // Настраиваем Боба в конструкторе
     Player();
- 
+    float get_hp();
+    void set_hp(float hp);
     // Для отправки спрайта в главную функцию
     Sprite getSprite();
  

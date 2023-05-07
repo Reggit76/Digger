@@ -4,7 +4,8 @@ Player::Player()
 {
     // скорость персонажа 
     m_Speed = 400;
- 
+    /// hp
+    hp = 100.f;
     // Связываем текстуру и спрайт
     m_Texture.loadFromFile("bob.png");
     m_Sprite.setTexture(m_Texture);     
@@ -37,7 +38,16 @@ void Player::moveRight()
 {
     m_RightPressed = true;
 }
- 
+/// set and get
+float Player::get_hp()
+{
+    return hp;
+}
+void Player::set_hp(float hp)
+{
+    this -> hp = hp;
+}
+
 void Player::stopLeft()
 {
     m_LeftPressed = false;
