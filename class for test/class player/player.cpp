@@ -3,7 +3,7 @@
 Player::Player()
 {
     // скорость персонажа 
-    m_Speed = 400;
+    m_Speed = 100.f;
     /// hp
     hp = 100.f;
     // Связываем текстуру и спрайт
@@ -11,8 +11,9 @@ Player::Player()
     m_Sprite.setTexture(m_Texture);     
  
     // Устанавливаем начальную позицию игрока в пикселях
-    m_Position.x = 300;
-    m_Position.y = 300;
+    set_position_x(100.f);
+    set_position_x(100.f);
+
  
 }
  
@@ -48,45 +49,74 @@ void Player::set_hp(float hp)
     this -> hp = hp;
 }
 
-void Player::stopLeft()
+float Player::get_damage()
 {
-    m_LeftPressed = false;
+    return damage;
 }
-void Player::stopUp()
+
+void Player::set_damage(float damage)
 {
-    m_UpPressed = false;
+    this -> damage = damage;
 }
-void Player::stopDown()
+float Player::get_position_x()
 {
-    m_DownPressed = false;
+    return position_x;
 }
-void Player::stopRight()
+
+void Player::set_position_x(float position_x)
 {
-    m_RightPressed = false;
+    this -> position_x = position_x;
 }
+float Player::get_position_y()
+{
+    return position_x;
+}
+
+void Player::set_position_y(float position_y)
+{
+    this -> position_y = position_y;
+}
+
+
+
+// void Player::stopLeft()
+// {
+//     m_LeftPressed = false;
+// }
+// void Player::stopUp()
+// {
+//     m_UpPressed = false;
+// }
+// void Player::stopDown()
+// {
+//     m_DownPressed = false;
+// }
+// void Player::stopRight()
+// {
+//     m_RightPressed = false;
+// }
  
-// Двигаем Боба на основании пользовательского ввода в этом кадре,
-// прошедшего времени и скорости
-void Player::update(float elapsedTime)
+// 
+void Player::update()
 {
     if (m_RightPressed)
     {
-        m_Position.x += m_Speed * elapsedTime;
+        set_position_x((get_position_x())+1);
     }
  
     if (m_LeftPressed)
     {
-        m_Position.x -= m_Speed * elapsedTime;
+        set_position_x((get_position_x())-1);
     }
     if (m_UpPressed)
     {
-        m_Position.y += m_Speed * elapsedTime;
+        set_position_y((get_position_y())+1);
     }
     if (m_DownPressed)
     {
-        m_Position.y -=  m_Speed * elapsedTime;
+        set_position_y((get_position_y())-1);
     }
     // Теперь сдвигаем спрайт на новую позицию
-    m_Sprite.setPosition(m_Position);   
+    m_Sprite.setPosition(get_position_x(),get_position_y());   
  
 }

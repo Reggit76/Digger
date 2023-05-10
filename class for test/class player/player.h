@@ -8,8 +8,8 @@ class Player
     // Все private переменные могут быть доступны только внутри объекта
 private:
  
-    // Позиция игрока
-    Vector2f m_Position;
+
+
  
     // Объявляем объект Sprite
     Sprite m_Sprite;
@@ -27,6 +27,9 @@ private:
     float m_Speed;
     ///hp
     float hp;
+    float damage;
+    float position_x;
+    float position_y;
     // Открытые методы
 public:
  
@@ -35,6 +38,12 @@ public:
     /// геты и сеты для хп
     float get_hp();
     void set_hp(float hp);
+    float get_damage();
+    void set_damage(float damage);
+    float get_position_x();
+    void set_position_x(float x);
+    float get_position_y();
+    void set_position_y(float y);
     // Для отправки спрайта в главную функцию
     Sprite getSprite();
  
@@ -45,12 +54,13 @@ public:
     void moveRight();
  
     // Прекращение движения
-    void stopLeft();
-    void stopUp();
-    void stopDown();
-    void stopRight();
+    // void stopLeft();
+    // void stopUp();
+    // void stopDown();
+    // void stopRight();
+    
  
     // Эта функция будет вызываться на каждый кадр
-    void update(float elapsedTime);
+    void update();
  
 };
