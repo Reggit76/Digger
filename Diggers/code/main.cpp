@@ -1,6 +1,6 @@
 #include "Game.h"
 #include <iostream>
-#include <time.h>
+
 
 int main() {
 	RenderWindow window(sf::VideoMode(1200, 800), "DiggerV2");
@@ -30,7 +30,7 @@ int main() {
 		if (Keyboard::isKeyPressed(Keyboard::W)) {
 			game.movePlayer(window, 0, -1, "Up");
 		}
-		//game.playerDraw(window);
+		game.playerDraw(window);
 		window.display();
 	}
 	window.close();

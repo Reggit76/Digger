@@ -59,6 +59,7 @@ void Player::move(RenderWindow& window, float x, float y, std::string rotate)
     if (rotate == "Right")
         sp.setTexture(txRight);
     window.draw(sp);
+    sleep(milliseconds(500));
 }
 
 void Player::draw(RenderWindow& window)
