@@ -82,10 +82,12 @@ bool Game::removeRock(float x, float y)
 
 void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate)
 {
+    if (player.GetCordX() == 300.f && player.GetCordY() == 100.f)
+        removeRock(300.f, 100.f);
     player.move(window, x, y, rotate);
-    /*View view(FloatRect(0, 0, player.GetCordX(), player.GetCordY()));
+    View view(FloatRect(0, 0, 1200, 800));
     view.setCenter(Vector2f(player.GetCordX(), player.GetCordY()));
-    window.setView(view);*/
+    window.setView(view);
 }
 
 void Game::playerDraw(RenderWindow& window) {

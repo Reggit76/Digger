@@ -31,6 +31,9 @@
     <ClInclude Include="code\Player.h" />
     <ClInclude Include="code\Rock.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="map.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

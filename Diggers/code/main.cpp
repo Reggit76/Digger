@@ -21,16 +21,17 @@ int main() {
 		if (Keyboard::isKeyPressed(Keyboard::A)) {
 			game.movePlayer(window, -1, 0, "Left");
 		}
-		if (Keyboard::isKeyPressed(Keyboard::D)) {
+		else if (Keyboard::isKeyPressed(Keyboard::D)) {
 			game.movePlayer(window, 1, 0, "Right");
 		}
-		if (Keyboard::isKeyPressed(Keyboard::S)) {
+		else if (Keyboard::isKeyPressed(Keyboard::S)) {
 			game.movePlayer(window, 0, 1, "Down");
 		}
-		if (Keyboard::isKeyPressed(Keyboard::W)) {
+		else if (Keyboard::isKeyPressed(Keyboard::W)) {
 			game.movePlayer(window, 0, -1, "Up");
 		}
-		game.playerDraw(window);
+		else
+			game.playerDraw(window);
 		window.display();
 	}
 	window.close();
