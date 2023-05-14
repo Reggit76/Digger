@@ -3,8 +3,8 @@
 
 Rock::Rock()
 {
-	this->x = -200.f;
-	this->y = -200.f;
+	this->x = -1000.f;
+	this->y = -1000.f;
 }
 
 Rock::Rock(float x, float y)

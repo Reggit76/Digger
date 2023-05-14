@@ -1,9 +1,11 @@
 #include "Game.h"
 
 
-Game::Game()
+Game::Game(sf::RenderWindow& window)
 {
     initial();
+    player.move(window, 1, 1, "Right");
+    player.move(window, -1, -1, "Right");
 }
 
 Game::~Game()
@@ -23,12 +25,15 @@ void Game::import(string filename)
     int count_rock;
     file >> count_rock;
     lRock.resize(count_rock);
+    lDiamond.resize(count_rock);
     for (int i = 0; i < hight; i++) {
         for (int j = 0; j < width; j++) {
             file >> bf;
             arr[i][j] = bf;
             if (bf == 3)
                 lRock.push_front(Rock(100.f * j, 100.f * i));
+            if (bf == 5)
+                lDiamond.push_front(Diamond(100.f * j, 100.f * i));
         }
     }
     file.close();
@@ -68,6 +73,18 @@ void Game::drawRock(sf::RenderWindow& window)
     }
 }
 
+void Game::drawDiamond(RenderWindow& window)
+{
+    list <Diamond>::iterator it;
+    Texture tx;
+    for (it = lDiamond.begin(); it != lDiamond.end(); it++) {
+        tx.loadFromFile("img/Diamond.png");
+        Sprite sp(tx);
+        sp.setPosition((*it).GetCordX(), (*it).GetCordY());
+        window.draw(sp);
+    }
+}
+
 bool Game::removeRock(float x, float y)
 {
     list <Rock>::iterator it;
@@ -80,14 +97,34 @@ bool Game::removeRock(float x, float y)
     return false;
 }
 
+bool Game::removeDiamond(float x, float y)
+{
+    list <Diamond>::iterator it;
+    for (it = lDiamond.begin(); it != lDiamond.end(); it++) {
+        if (x == (*it).GetCordX() && y == (*it).GetCordY()) {
+            it = lDiamond.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
 void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate)
 {
-    if (player.GetCordX() == 300.f && player.GetCordY() == 100.f)
-        removeRock(300.f, 100.f);
-    player.move(window, x, y, rotate);
-    View view(FloatRect(0, 0, 1200, 800));
-    view.setCenter(Vector2f(player.GetCordX(), player.GetCordY()));
-    window.setView(view);
+    int px = (player.GetCordX() + x * 100.f) / 100.f;
+    int py = (player.GetCordY() + y * 100.f) / 100.f;
+    if (arr[py][px] == 3)
+        removeRock(px * 100.f, py * 100.f);
+    if (arr[py][px] == 5)
+        removeDiamond(px * 100.f, py * 100.f);
+    if (arr[py][px] != 9) {
+        player.move(window, x, y, rotate);
+        View view(FloatRect(0, 0, 1200, 800));
+        view.setCenter(Vector2f(player.GetCordX(), player.GetCordY()));
+        window.setView(view);
+    }
+    else
+        player.draw(window);
 }
 
 void Game::playerDraw(RenderWindow& window) {
