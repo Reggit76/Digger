@@ -3,8 +3,8 @@
 
 Diamond::Diamond()
 {
-	this->x = -200.f;
-	this->y = -200.f;
+	this->x = -600.f;
+	this->y = -600.f;
 }
 
 Diamond::Diamond(float x, float y)

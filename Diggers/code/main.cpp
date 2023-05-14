@@ -5,11 +5,12 @@
 int main() {
 	RenderWindow window(sf::VideoMode(1200, 800), "DiggerV2");
 	View view(FloatRect(0, 0, 1200, 800));
-	Game game;
+	Game game(window);
 	while (window.isOpen()) {
 		window.clear();		
 		game.drawBackground(window);
 		game.drawRock(window);
+		game.drawDiamond(window);
 		Event event;
 		while (window.pollEvent(event))
 		{
