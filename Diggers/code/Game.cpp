@@ -113,10 +113,17 @@ void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate
 {
     int px = (player.GetCordX() + x * 100.f) / 100.f;
     int py = (player.GetCordY() + y * 100.f) / 100.f;
-    if (arr[py][px] == 3)
+    if (arr[py][px] == 3 && player.get_count_of_hits() > 0)
+    {   
         removeRock(px * 100.f, py * 100.f);
-    if (arr[py][px] == 5)
+        player.set_count_of_hits((player.get_count_of_hits())-1);
+    }
+    if (arr[py][px] == 5 && player.get_count_of_hits() > 0)
+    {
         removeDiamond(px * 100.f, py * 100.f);
+        player.set_count_of_hits((player.get_count_of_hits())-1);
+        player.set_score(25);
+    }
     if (arr[py][px] != 9) {
         player.move(window, x, y, rotate);
         View view(FloatRect(0, 0, 1200, 800));

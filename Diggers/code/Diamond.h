@@ -3,6 +3,7 @@
 class Diamond{
 private:
 	float x, y;
+	int drop;
 
 public:
 	Diamond();
@@ -11,6 +12,6 @@ public:
 	float GetCordX();
 	float GetCordY();
 	void SetCord(float x, float y);
-
+	// int get_drop();
 };
 
