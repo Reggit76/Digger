@@ -22,10 +22,9 @@ void Game::import(string filename)
         arr[i] = new int[width];
     }
     int bf;
-    int count_rock;
-    file >> count_rock;
-    lRock.resize(count_rock);
-    lDiamond.resize(count_rock);
+    lRock.resize(5);
+    lDiamond.resize(5);
+    lEnemy.resize(3);
     for (int i = 0; i < hight; i++) {
         for (int j = 0; j < width; j++) {
             file >> bf;
@@ -34,6 +33,8 @@ void Game::import(string filename)
                 lRock.push_front(Rock(100.f * j, 100.f * i));
             if (bf == 5)
                 lDiamond.push_front(Diamond(100.f * j, 100.f * i));
+            if (bf == 6)
+                lEnemy.push_front(Enemy(100.f * j, 100.f * i));
         }
     }
     file.close();
@@ -85,6 +86,14 @@ void Game::drawDiamond(RenderWindow& window)
     }
 }
 
+void Game::drawEnemy(RenderWindow& window)
+{
+    list <Enemy>::iterator it;
+    for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
+        (*it).draw(window);
+    }
+}
+
 bool Game::removeRock(float x, float y)
 {
     list <Rock>::iterator it;
@@ -111,16 +120,18 @@ bool Game::removeDiamond(float x, float y)
 
 void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate)
 {
-    int px = (player.GetCordX() + x * 100.f) / 100.f;
-    int py = (player.GetCordY() + y * 100.f) / 100.f;
+    int px = player.GetCordX() / 100.f + x;
+    int py = player.GetCordY() / 100.f + y;
     if (arr[py][px] == 3 && player.get_count_of_hits() > 0)
     {   
         removeRock(px * 100.f, py * 100.f);
+        arr[py][px] = 0;
         player.set_count_of_hits((player.get_count_of_hits())-1);
     }
     if (arr[py][px] == 5 && player.get_count_of_hits() > 0)
     {
         removeDiamond(px * 100.f, py * 100.f);
+        arr[py][px] = 0;
         player.set_count_of_hits((player.get_count_of_hits())-1);
         player.set_score(25);
     }
@@ -136,4 +147,26 @@ void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate
 
 void Game::playerDraw(RenderWindow& window) {
     player.draw(window);
+}
+
+void Game::enemyUpdate(RenderWindow& window)
+{
+    /*list <Enemy>::iterator it;
+    for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
+        int step = rand() % 4;
+        if (step >= 2) {
+            int x = (rand() % 4) - 2;
+            if (x > 0)
+                (*it).move(window, 1, 0, "Right");
+            else if (x < 0)
+                (*it).move(window, -1, 0, "Left");
+        }
+        else if (step < 2) {
+            int y = (rand() % 4) - 2;
+            if (y > 0)
+                (*it).move(window, 0, 1, "Up");
+            else if (y < 0)
+                (*it).move(window, 0, -1, "Down");
+        }
+    }*/
 }

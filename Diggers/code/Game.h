@@ -3,9 +3,11 @@
 #include <fstream>
 #include <list>
 #include <iterator>
+#include <time.h>
 #include "Rock.h"
 #include "Player.h"
 #include "Diamond.h"
+#include "Enemy.h"
 
 
 using namespace sf;
@@ -20,6 +22,7 @@ private:
     int **arr;
     list <Rock> lRock;
     list <Diamond> lDiamond;
+    list <Enemy> lEnemy;
     Player player;
 public:
     Game(sf::RenderWindow& window);
@@ -29,8 +32,11 @@ public:
     void drawBackground(RenderWindow& window);
     void drawRock(RenderWindow& window);
     void drawDiamond(RenderWindow& window);
+    void drawEnemy(RenderWindow& window);
     bool removeRock(float x, float y);
     bool removeDiamond(float x, float y);
     void movePlayer(RenderWindow& window, float x, float y, std::string rotate);
     void playerDraw(RenderWindow& window);
+    void enemyUpdate(RenderWindow& window);
+    
 };

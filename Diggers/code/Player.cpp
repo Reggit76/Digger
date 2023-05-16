@@ -45,22 +45,27 @@ float Player::GetCordY()
 {
     return y;
 }
+
 int Player::get_count_of_hits()
 {
     return count_of_hits;
 }
+
 void Player::set_count_of_hits(int count_of_hits)
 {
     this->count_of_hits = count_of_hits;
 }
+
 int Player::get_score()
 {
     return score;
 }
+
 void Player::set_score(int score)
 {
     this->score = score;
 }
+
 void Player::move(RenderWindow& window, float x, float y, std::string rotate)
 {
     SetCordX(GetCordX() + x * 100.f);

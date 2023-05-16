@@ -1,16 +1,21 @@
 #include "Game.h"
 #include <iostream>
-
+#include <SFML/Audio.hpp>
 
 int main() {
 	RenderWindow window(sf::VideoMode(1200, 800), "DiggerV2");
 	View view(FloatRect(0, 0, 1200, 800));
 	Game game(window);
+	Music music;
+	music.openFromFile("music.ogg");
+	music.play();
+	music.setVolume(10);
 	while (window.isOpen()) {
 		window.clear();		
 		game.drawBackground(window);
 		game.drawRock(window);
 		game.drawDiamond(window);
+		game.drawEnemy(window);
 		Event event;
 		while (window.pollEvent(event))
 		{
@@ -33,6 +38,7 @@ int main() {
 		}
 		else
 			game.playerDraw(window);
+		game.enemyUpdate(window);
 		window.display();
 	}
 	window.close();

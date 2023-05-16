@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <time.h>
 
 using namespace sf;
 
@@ -26,12 +25,12 @@ public:    // �������� ������
 
     int get_score();
     void set_score(int score);
-    float GetHP();
-    void SetHP(float hp);
     void set_count_of_hits(int count_of_hits);
     int get_count_of_hits();
+    void SetHP(float hp);
     void SetCordX(float x);
     void SetCordY(float y);
+    float GetHP();
     float GetCordX();
     float GetCordY();
     void move(RenderWindow& window, float x, float y, std::string rotate);
