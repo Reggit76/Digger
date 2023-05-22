@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <fstream>
 #include <list>
 #include <iterator>
@@ -23,6 +24,8 @@ private:
     list <Rock> lRock;
     list <Diamond> lDiamond;
     list <Enemy> lEnemy;
+    SoundBuffer SoundBf;
+    Sound sound;
     Player player;
 public:
     Game(sf::RenderWindow& window);

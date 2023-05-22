@@ -6,6 +6,7 @@ Game::Game(sf::RenderWindow& window)
     import("map.txt");
     player.move(window, 1, 1, "Right");
     player.move(window, -1, -1, "Right");
+    SoundBf.loadFromFile("DiamondSound.mp3");
 }
 
 Game::~Game()
@@ -105,6 +106,9 @@ bool Game::removeDiamond(float x, float y)
     list <Diamond>::iterator it;
     for (it = lDiamond.begin(); it != lDiamond.end(); it++) {
         if (x == (*it).GetCordX() && y == (*it).GetCordY()) {
+            SoundBf.loadFromFile("DiamondSound.mp3");
+            sound.setBuffer(SoundBf);
+            sound.play();
             it = lDiamond.erase(it);
             player.set_score((player.get_score()) + 25);
             return true;
@@ -135,8 +139,15 @@ void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate
         view.setCenter(Vector2f(player.GetCordX(), player.GetCordY()));
         window.setView(view);
     }
-    else
+    /*if (arr[py][px] == 9) {
+        SoundBf.loadFromFile("Wall.mp3");
+        sound.setBuffer(SoundBf);
+        sound.play();
         player.draw(window);
+    }*/
+    else {
+        player.draw(window);
+    }       
 }
 
 void Game::playerDraw(RenderWindow& window) {
@@ -179,7 +190,7 @@ void Game::enemyUpdate(RenderWindow& window)
             int px = abs((*it).GetCordX() / 100.f + StepX);
             int x = (*it).GetCordX() / 100.f;
             int y = (*it).GetCordY() / 100.f;
-            // (arr[y][px] != 9) {
+            //if (arr[y][px] != 9) {
                 (*it).move(window, StepX, 0);
             //}
         }

@@ -1,12 +1,12 @@
 #include "Game.h"
 #include <iostream>
-#include <SFML/Audio.hpp>
+
 
 int main() {
 	RenderWindow window(sf::VideoMode(1200, 800), "DiggerV2");
 	Game game(window);
 	Music music;
-	music.openFromFile("music.ogg");
+	music.openFromFile("sound/music.ogg");
 	music.play();
 	music.setVolume(5);
 	while (window.isOpen()) {
