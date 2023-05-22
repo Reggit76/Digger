@@ -1,6 +1,12 @@
-﻿  Game.cpp
-c:\users\ilya\documents\github\digger\diggers\code\game.cpp(124): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
-c:\users\ilya\documents\github\digger\diggers\code\game.cpp(125): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
-  main.cpp
-  Создание кода...
+﻿  main.cpp
+c:\users\ilya\documents\github\digger\diggers\code\main.cpp(44): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
+c:\users\ilya\documents\github\digger\diggers\code\main.cpp(87): warning C4244: аргумент: преобразование "int" в "T", возможна потеря данных
+          with
+          [
+              T=float
+          ]
   Diggers.vcxproj -> C:\Users\ilya\Documents\GitHub\Digger\Diggers\x64\Debug\Diggers.exe
