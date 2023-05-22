@@ -112,6 +112,7 @@ bool Game::removeDiamond(float x, float y)
     for (it = lDiamond.begin(); it != lDiamond.end(); it++) {
         if (x == (*it).GetCordX() && y == (*it).GetCordY()) {
             it = lDiamond.erase(it);
+            player.set_score((player.get_score()) + 25);
             return true;
         }
     }
@@ -133,7 +134,7 @@ void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate
         removeDiamond(px * 100.f, py * 100.f);
         arr[py][px] = 0;
         player.set_count_of_hits((player.get_count_of_hits())-1);
-        player.set_score(25);
+        
     }
     if (arr[py][px] != 9) {
         player.move(window, x, y, rotate);
@@ -146,12 +147,28 @@ void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate
 }
 
 void Game::playerDraw(RenderWindow& window) {
+    
+    Font font;
+
+    font.loadFromFile("arial.ttf");
+
+    string info = "Score: " + to_string(player.get_score());
+    info += "\nHits: " + to_string(player.get_count_of_hits());
+
+    Text text(info, font, 25);
+
+    text.setFillColor(Color::White);
+
+    text.setPosition(player.GetCordX() - (window.getSize().x / 2 - 300), player.GetCordY() - (window.getSize().y / 2 - 20));
+
+    window.draw(text);
+
     player.draw(window);
 }
 
 void Game::enemyUpdate(RenderWindow& window)
 {
-    /*list <Enemy>::iterator it;
+   /* list <Enemy>::iterator it;
     for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
         int step = rand() % 4;
         if (step >= 2) {
@@ -170,3 +187,4 @@ void Game::enemyUpdate(RenderWindow& window)
         }
     }*/
 }
+

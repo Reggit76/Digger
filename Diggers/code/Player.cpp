@@ -6,7 +6,7 @@ Player::Player()
     hp = 100.f;
     count_of_hits = 10;
     score = 0;
-    // ������������� ��������� ������� ������ � ��������
+    // установка позиции
     this->x = 100.f;
     this->y = 100.f;
     txUp.loadFromFile("img/playerUp.png");
@@ -45,7 +45,7 @@ float Player::GetCordY()
 {
     return y;
 }
-
+//кол-во ударов
 int Player::get_count_of_hits()
 {
     return count_of_hits;
@@ -55,7 +55,7 @@ void Player::set_count_of_hits(int count_of_hits)
 {
     this->count_of_hits = count_of_hits;
 }
-
+//кол-во очков :у пацика с района 1,у казаха 3
 int Player::get_score()
 {
     return score;
