@@ -3,7 +3,7 @@
 
 Game::Game(sf::RenderWindow& window)
 {
-    initial();
+    import("map.txt");
     player.move(window, 1, 1, "Right");
     player.move(window, -1, -1, "Right");
 }
@@ -38,12 +38,6 @@ void Game::import(string filename)
         }
     }
     file.close();
-}
-
-bool Game::initial()
-{
-    import("map.txt");
-    return true;
 }
 
 void Game::drawBackground(sf::RenderWindow& window)
@@ -112,6 +106,7 @@ bool Game::removeDiamond(float x, float y)
     for (it = lDiamond.begin(); it != lDiamond.end(); it++) {
         if (x == (*it).GetCordX() && y == (*it).GetCordY()) {
             it = lDiamond.erase(it);
+            player.set_score((player.get_score()) + 25);
             return true;
         }
     }
@@ -133,7 +128,6 @@ void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate
         removeDiamond(px * 100.f, py * 100.f);
         arr[py][px] = 0;
         player.set_count_of_hits((player.get_count_of_hits())-1);
-        player.set_score(25);
     }
     if (arr[py][px] != 9) {
         player.move(window, x, y, rotate);
@@ -149,24 +143,54 @@ void Game::playerDraw(RenderWindow& window) {
     player.draw(window);
 }
 
+void Game::drawStatus(RenderWindow& window)
+{
+    Font font;
+
+    font.loadFromFile("arial.ttf");
+
+    string info;
+    info += "\nScore: " + to_string((int)player.GetHP());
+    info += "\nScore: " + to_string(player.get_score());
+    info += "\nHits: " + to_string(player.get_count_of_hits());
+
+    Text text(info, font, 25);
+
+    text.setFillColor(Color::White);
+
+    text.setPosition(player.GetCordX() - 600, player.GetCordY() - (window.getSize().y / 2 - 20));
+
+    window.draw(text);
+}
+
 void Game::enemyUpdate(RenderWindow& window)
 {
-    /*list <Enemy>::iterator it;
+    list <Enemy>::iterator it;
     for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
+        if (player.GetCordX() == (*it).GetCordX() && player.GetCordY() == (*it).GetCordY()) {
+            it = lEnemy.erase(it);
+            player.SetHP(player.GetHP() - 20);
+            player.set_count_of_hits((player.get_count_of_hits()) - 1);
+            continue;
+        }
         int step = rand() % 4;
         if (step >= 2) {
-            int x = (rand() % 4) - 2;
-            if (x > 0)
-                (*it).move(window, 1, 0, "Right");
-            else if (x < 0)
-                (*it).move(window, -1, 0, "Left");
+            int StepX = (rand() % 3) - 1;
+            int px = (*it).GetCordX() / 100.f + StepX;
+            int x = (*it).GetCordX() / 100.f;
+            int y = (*it).GetCordY() / 100.f;
+            if (px != 9) {
+                (*it).move(window, StepX, 0);
+            }
         }
         else if (step < 2) {
-            int y = (rand() % 4) - 2;
-            if (y > 0)
-                (*it).move(window, 0, 1, "Up");
-            else if (y < 0)
-                (*it).move(window, 0, -1, "Down");
+            int StepY = (rand() % 3) - 1;
+            int py = (*it).GetCordY() / 100.f + StepY;
+            int x = (*it).GetCordX() / 100.f;
+            int y = (*it).GetCordY() / 100.f;
+            if (py != 9) {
+                (*it).move(window, 0, StepY);
+            }
         }
-    }*/
+    }
 }

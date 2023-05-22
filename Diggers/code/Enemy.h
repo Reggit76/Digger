@@ -24,7 +24,7 @@ public:
     float GetHP();
     float GetCordX();
     float GetCordY();
-    void move(RenderWindow& window, float x, float y, std::string rotate);
+    void move(RenderWindow& window, float x, float y);
     void draw(RenderWindow& window);
 };
 

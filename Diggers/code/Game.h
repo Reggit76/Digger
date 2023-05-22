@@ -3,7 +3,6 @@
 #include <fstream>
 #include <list>
 #include <iterator>
-#include <time.h>
 #include "Rock.h"
 #include "Player.h"
 #include "Diamond.h"
@@ -28,7 +27,6 @@ public:
     Game(sf::RenderWindow& window);
     virtual ~Game();
     void import(string filename);
-    bool initial();
     void drawBackground(RenderWindow& window);
     void drawRock(RenderWindow& window);
     void drawDiamond(RenderWindow& window);
@@ -37,6 +35,7 @@ public:
     bool removeDiamond(float x, float y);
     void movePlayer(RenderWindow& window, float x, float y, std::string rotate);
     void playerDraw(RenderWindow& window);
+    void drawStatus(RenderWindow& window);
     void enemyUpdate(RenderWindow& window);
     
 };
