@@ -3,6 +3,7 @@
 #include <fstream>
 #include <list>
 #include <iterator>
+#include <math.h>
 #include "Rock.h"
 #include "Player.h"
 #include "Diamond.h"

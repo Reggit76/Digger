@@ -150,7 +150,7 @@ void Game::drawStatus(RenderWindow& window)
     font.loadFromFile("arial.ttf");
 
     string info;
-    info += "\nScore: " + to_string((int)player.GetHP());
+    info += "\nHp: " + to_string((int)player.GetHP());
     info += "\nScore: " + to_string(player.get_score());
     info += "\nHits: " + to_string(player.get_count_of_hits());
 
@@ -158,7 +158,7 @@ void Game::drawStatus(RenderWindow& window)
 
     text.setFillColor(Color::White);
 
-    text.setPosition(player.GetCordX() - 600, player.GetCordY() - (window.getSize().y / 2 - 20));
+    text.setPosition(player.GetCordX() - 600, player.GetCordY() - 400);
 
     window.draw(text);
 }
@@ -176,21 +176,21 @@ void Game::enemyUpdate(RenderWindow& window)
         int step = rand() % 4;
         if (step >= 2) {
             int StepX = (rand() % 3) - 1;
-            int px = (*it).GetCordX() / 100.f + StepX;
+            int px = abs((*it).GetCordX() / 100.f + StepX);
             int x = (*it).GetCordX() / 100.f;
             int y = (*it).GetCordY() / 100.f;
-            if (px != 9) {
+            // (arr[y][px] != 9) {
                 (*it).move(window, StepX, 0);
-            }
+            //}
         }
         else if (step < 2) {
             int StepY = (rand() % 3) - 1;
-            int py = (*it).GetCordY() / 100.f + StepY;
+            int py = abs((*it).GetCordY() / 100.f + StepY);
             int x = (*it).GetCordX() / 100.f;
             int y = (*it).GetCordY() / 100.f;
-            if (py != 9) {
+            //if (arr[py][x] != 9) {
                 (*it).move(window, 0, StepY);
-            }
+            //}
         }
     }
 }
