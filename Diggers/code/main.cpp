@@ -4,13 +4,18 @@
 
 int main() {
 	RenderWindow window(sf::VideoMode(1200, 800), "DiggerV2");
-	View view(FloatRect(0, 0, 1200, 800));
 	Game game(window);
+	Music music;
+	music.openFromFile("sound/music.ogg");
+	music.play();
+	music.setVolume(5);
 	while (window.isOpen()) {
 		window.clear();		
 		game.drawBackground(window);
 		game.drawRock(window);
 		game.drawDiamond(window);
+		game.drawEnemy(window);
+		game.drawStatus(window);
 		Event event;
 		while (window.pollEvent(event))
 		{
@@ -31,8 +36,13 @@ int main() {
 		else if (Keyboard::isKeyPressed(Keyboard::W)) {
 			game.movePlayer(window, 0, -1, "Up");
 		}
-		else
+		else if (Keyboard::isKeyPressed(Keyboard::W)) {
+
+		}
+		else {
 			game.playerDraw(window);
+		}
+		game.enemyUpdate(window);
 		window.display();
 	}
 	window.close();

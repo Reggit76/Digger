@@ -3,9 +3,10 @@
 
 Game::Game(sf::RenderWindow& window)
 {
-    initial();
+    import("map.txt");
     player.move(window, 1, 1, "Right");
     player.move(window, -1, -1, "Right");
+    SoundBf.loadFromFile("DiamondSound.mp3");
 }
 
 Game::~Game()
@@ -22,10 +23,9 @@ void Game::import(string filename)
         arr[i] = new int[width];
     }
     int bf;
-    int count_rock;
-    file >> count_rock;
-    lRock.resize(count_rock);
-    lDiamond.resize(count_rock);
+    lRock.resize(5);
+    lDiamond.resize(5);
+    lEnemy.resize(3);
     for (int i = 0; i < hight; i++) {
         for (int j = 0; j < width; j++) {
             file >> bf;
@@ -34,15 +34,11 @@ void Game::import(string filename)
                 lRock.push_front(Rock(100.f * j, 100.f * i));
             if (bf == 5)
                 lDiamond.push_front(Diamond(100.f * j, 100.f * i));
+            if (bf == 6)
+                lEnemy.push_front(Enemy(100.f * j, 100.f * i));
         }
     }
     file.close();
-}
-
-bool Game::initial()
-{
-    import("map.txt");
-    return true;
 }
 
 void Game::drawBackground(sf::RenderWindow& window)
@@ -85,6 +81,14 @@ void Game::drawDiamond(RenderWindow& window)
     }
 }
 
+void Game::drawEnemy(RenderWindow& window)
+{
+    list <Enemy>::iterator it;
+    for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
+        (*it).draw(window);
+    }
+}
+
 bool Game::removeRock(float x, float y)
 {
     list <Rock>::iterator it;
@@ -102,7 +106,11 @@ bool Game::removeDiamond(float x, float y)
     list <Diamond>::iterator it;
     for (it = lDiamond.begin(); it != lDiamond.end(); it++) {
         if (x == (*it).GetCordX() && y == (*it).GetCordY()) {
+            SoundBf.loadFromFile("DiamondSound.mp3");
+            sound.setBuffer(SoundBf);
+            sound.play();
             it = lDiamond.erase(it);
+            player.set_score((player.get_score()) + 25);
             return true;
         }
     }
@@ -111,22 +119,89 @@ bool Game::removeDiamond(float x, float y)
 
 void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate)
 {
-    int px = (player.GetCordX() + x * 100.f) / 100.f;
-    int py = (player.GetCordY() + y * 100.f) / 100.f;
-    if (arr[py][px] == 3)
+    int px = player.GetCordX() / 100.f + x;
+    int py = player.GetCordY() / 100.f + y;
+    if (arr[py][px] == 3 && player.get_count_of_hits() > 0)
+    {   
         removeRock(px * 100.f, py * 100.f);
-    if (arr[py][px] == 5)
+        arr[py][px] = 0;
+        player.set_count_of_hits((player.get_count_of_hits())-1);
+    }
+    if (arr[py][px] == 5 && player.get_count_of_hits() > 0)
+    {
         removeDiamond(px * 100.f, py * 100.f);
+        arr[py][px] = 0;
+        player.set_count_of_hits((player.get_count_of_hits())-1);
+    }
     if (arr[py][px] != 9) {
         player.move(window, x, y, rotate);
         View view(FloatRect(0, 0, 1200, 800));
         view.setCenter(Vector2f(player.GetCordX(), player.GetCordY()));
         window.setView(view);
     }
-    else
+    /*if (arr[py][px] == 9) {
+        SoundBf.loadFromFile("Wall.mp3");
+        sound.setBuffer(SoundBf);
+        sound.play();
         player.draw(window);
+    }*/
+    else {
+        player.draw(window);
+    }       
 }
 
 void Game::playerDraw(RenderWindow& window) {
     player.draw(window);
+}
+
+void Game::drawStatus(RenderWindow& window)
+{
+    Font font;
+
+    font.loadFromFile("arial.ttf");
+
+    string info;
+    info += "\nHp: " + to_string((int)player.GetHP());
+    info += "\nScore: " + to_string(player.get_score());
+    info += "\nHits: " + to_string(player.get_count_of_hits());
+
+    Text text(info, font, 25);
+
+    text.setFillColor(Color::White);
+
+    text.setPosition(player.GetCordX() - 600, player.GetCordY() - 400);
+
+    window.draw(text);
+}
+
+void Game::enemyUpdate(RenderWindow& window)
+{
+    list <Enemy>::iterator it;
+    for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
+        if (player.GetCordX() == (*it).GetCordX() && player.GetCordY() == (*it).GetCordY()) {
+            it = lEnemy.erase(it);
+            player.SetHP(player.GetHP() - 20);
+            player.set_count_of_hits((player.get_count_of_hits()) - 1);
+            continue;
+        }
+        int step = rand() % 4;
+        if (step >= 2) {
+            int StepX = (rand() % 3) - 1;
+            int px = abs((*it).GetCordX() / 100.f + StepX);
+            int x = (*it).GetCordX() / 100.f;
+            int y = (*it).GetCordY() / 100.f;
+            //if (arr[y][px] != 9) {
+                (*it).move(window, StepX, 0);
+            //}
+        }
+        else if (step < 2) {
+            int StepY = (rand() % 3) - 1;
+            int py = abs((*it).GetCordY() / 100.f + StepY);
+            int x = (*it).GetCordX() / 100.f;
+            int y = (*it).GetCordY() / 100.f;
+            //if (arr[py][x] != 9) {
+                (*it).move(window, 0, StepY);
+            //}
+        }
+    }
 }

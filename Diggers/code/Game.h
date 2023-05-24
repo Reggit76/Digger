@@ -1,11 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <fstream>
 #include <list>
 #include <iterator>
+#include <math.h>
 #include "Rock.h"
 #include "Player.h"
 #include "Diamond.h"
+#include "Enemy.h"
 
 
 using namespace sf;
@@ -20,17 +23,23 @@ private:
     int **arr;
     list <Rock> lRock;
     list <Diamond> lDiamond;
+    list <Enemy> lEnemy;
+    SoundBuffer SoundBf;
+    Sound sound;
     Player player;
 public:
     Game(sf::RenderWindow& window);
     virtual ~Game();
     void import(string filename);
-    bool initial();
     void drawBackground(RenderWindow& window);
     void drawRock(RenderWindow& window);
     void drawDiamond(RenderWindow& window);
+    void drawEnemy(RenderWindow& window);
     bool removeRock(float x, float y);
     bool removeDiamond(float x, float y);
     void movePlayer(RenderWindow& window, float x, float y, std::string rotate);
     void playerDraw(RenderWindow& window);
+    void drawStatus(RenderWindow& window);
+    void enemyUpdate(RenderWindow& window);
+    
 };

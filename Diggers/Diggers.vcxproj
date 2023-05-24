@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Diamond.cpp" />
+    <ClCompile Include="code\Enemy.cpp" />
     <ClCompile Include="code\Game.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\Player.cpp" />
@@ -27,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Diamond.h" />
+    <ClInclude Include="code\Enemy.h" />
     <ClInclude Include="code\Game.h" />
     <ClInclude Include="code\Player.h" />
     <ClInclude Include="code\Rock.h" />

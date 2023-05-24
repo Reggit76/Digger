@@ -30,6 +30,9 @@
     <ClCompile Include="code\Rock.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="code\Enemy.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\Diamond.h">
@@ -42,6 +45,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="code\Rock.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Enemy.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

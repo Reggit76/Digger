@@ -1,14 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <time.h>
 
 using namespace sf;
 
 class Player{ 
-private:    // Все private переменные могут быть доступны только внутри объекта
+private:    // пїЅпїЅпїЅ private пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     float x;
     float y;
+    int count_of_hits;
     ///hp
     float hp;
     Texture txLeft;
@@ -16,15 +16,21 @@ private:    // Все private переменные могут быть доступны только внутри объекта
     Texture txDown;
     Texture txUp;
     Sprite sp;
-public:    // Открытые методы
+    int score;
+public:    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-    // Настраиваем игрока в конструкторе
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     Player();
-    // геты и сеты для хп
-    float GetHP();
+    // пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ
+
+    int get_score();
+    void set_score(int score);
+    void set_count_of_hits(int count_of_hits);
+    int get_count_of_hits();
     void SetHP(float hp);
     void SetCordX(float x);
     void SetCordY(float y);
+    float GetHP();
     float GetCordX();
     float GetCordY();
     void move(RenderWindow& window, float x, float y, std::string rotate);
