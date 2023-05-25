@@ -99,7 +99,7 @@ void Game::drawEnemy(RenderWindow& window)
 {
     list <Enemy>::iterator it;
     for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
-        (*it).draw(window);
+        
     }
 }
 
@@ -182,7 +182,7 @@ void Game::drawStatus(RenderWindow& window)
     window.draw(text);
 }
 
-void Game::enemyUpdate(RenderWindow& window)
+void Game::Update(RenderWindow& window)
 {
     list <Enemy>::iterator it;
     for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
@@ -191,7 +191,6 @@ void Game::enemyUpdate(RenderWindow& window)
             player.SetHP(player.GetHP() - 20);
             player.set_count_of_hits((player.get_count_of_hits()) - 1);
             continue;
-        }
-        
+        }   
     }
 }

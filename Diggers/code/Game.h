@@ -41,5 +41,5 @@ public:
     void movePlayer(RenderWindow& window, float x, float y);
     void playerDraw(RenderWindow& window);
     void drawStatus(RenderWindow& window);
-    void enemyUpdate(RenderWindow& window);
+    void Update(RenderWindow& window);
 };

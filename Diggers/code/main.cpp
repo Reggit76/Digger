@@ -4,23 +4,23 @@
 
 int main() {
 	RenderWindow window(sf::VideoMode(1200, 800), "DiggerV2");
-	Game game(window);
-	Music music;
-	music.openFromFile("sound/music.ogg");
+	Game game(window); // создание класса game для дальнейшего использования механик игры
+	Music music; // подключаем фоновую музыку
+	music.openFromFile("sound/music.ogg"); 
 	music.play();
 	music.setVolume(5);
-	bool MenuIsOpen = true;
+	bool MenuIsOpen = true; // переменная отвечающие за состояние, открыто меню сейчач или нет
 	while (window.isOpen()) {
 		window.clear();		
 		Event event;
-		while (window.pollEvent(event))
+		while (window.pollEvent(event)) // цикл для проверки нажали ли на закрыть окно
 		{
 			if (event.type == Event::Closed)
 			{
 				window.close();
 			}
 		}
-		if (MenuIsOpen) {
+		if (MenuIsOpen) { // если меню открыто, то следим за положением курсора и нажатием на лкм
 			game.Menu(window);
 			Vector2i mp = Mouse::getPosition(window);
 			if ((mp.x > 320 && mp.x < 880) && (mp.y > 320 && mp.y < 420) && (Mouse::isButtonPressed(Mouse::Left))){
@@ -30,31 +30,31 @@ int main() {
 				window.close();
 			}
 		}
-		else {
-			game.drawBackground(window);
-			game.drawRock(window);
-			game.drawDiamond(window);
-			game.drawEnemy(window);
-			game.drawStatus(window);
-			if (Keyboard::isKeyPressed(Keyboard::A)) {
+		else { // если в меню нажали play то запускается логика уже игры
+			game.drawBackground(window); // отрисовка фона игры(карты)
+			game.drawRock(window); // отрисовка камней на карте
+			game.drawDiamond(window); // отрисовка алмазов на карте
+			game.drawEnemy(window); // отрисовка врагов
+			game.drawStatus(window); // отрисовка окна состояния персонажа
+			if (Keyboard::isKeyPressed(Keyboard::A)) { // шаг влево за персонажа
 				game.movePlayer(window, -1, 0);
 			}
-			else if (Keyboard::isKeyPressed(Keyboard::D)) {
+			else if (Keyboard::isKeyPressed(Keyboard::D)) { // шаг вправо за персонажа
 				game.movePlayer(window, 1, 0);
 			}
-			else if (Keyboard::isKeyPressed(Keyboard::S)) {
+			else if (Keyboard::isKeyPressed(Keyboard::S)) { // шаг вниз за персонажа
 				game.movePlayer(window, 0, 1);
 			}
-			else if (Keyboard::isKeyPressed(Keyboard::W)) {
+			else if (Keyboard::isKeyPressed(Keyboard::W)) { // шаг вверх за персонажа
 				game.movePlayer(window, 0, -1);
 			}
-			else if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+			else if (Keyboard::isKeyPressed(Keyboard::Escape)) { // пауза игры и выход в меню
 				MenuIsOpen = true;
 			}
-			else {
-				game.playerDraw(window);
+			else { // отрисовка персонажа если он ничего не делает
+				game.playerDraw(window); 
 			}
-			game.enemyUpdate(window);
+			game.Update(window); // обновление событий в игре
 		}	
 		window.display();
 	}
