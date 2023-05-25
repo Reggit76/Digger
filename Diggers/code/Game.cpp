@@ -6,7 +6,9 @@ Game::Game(RenderWindow& window)
     import("map.txt");
     player.move(window, 1, 0);
     player.move(window, -1, 0);
+    this->Gameover = false;
     SoundBf.loadFromFile("DiamondSound.ogg");
+
 }
 
 Game::~Game()
@@ -53,6 +55,16 @@ void Game::Menu(RenderWindow& window)
     View view(FloatRect(0, 0, 1200, 800));
     view.setCenter(Vector2f(600, 400));
     window.setView(view);
+}
+
+bool Game::GetGameover()
+{
+    return Gameover;
+}
+
+void Game::SetGameover()
+{
+    this->Gameover = false;
 }
 
 void Game::drawBackground(RenderWindow& window)
@@ -193,7 +205,7 @@ void Game::Update(RenderWindow& window)
             player.set_count_of_hits((player.get_count_of_hits()) - 1);
             continue;
         }
-        else if (player.GetHP() > 0){
+        else if ((player.get_count_of_hits() == 0 && player.GetHP() > 0)){
             player.SetHP(player.GetHP() - 20);
         }
     }

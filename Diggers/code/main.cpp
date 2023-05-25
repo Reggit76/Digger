@@ -30,6 +30,15 @@ int main() {
 				window.close();
 			}
 		}
+		else if (!MenuIsOpen && game.GetGameover()) {
+			Texture tx;
+			tx.loadFromFile("img/Gameover.png");
+			Sprite GameOver(tx);
+			window.draw(GameOver);
+			if (Mouse::isButtonPressed(Mouse::Left)){
+				MenuIsOpen = true;
+			}
+		}
 		else { // если в меню нажали play то запускается логика уже игры
 			game.drawBackground(window); // отрисовка фона игры(карты)
 			game.drawRock(window); // отрисовка камней на карте

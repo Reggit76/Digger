@@ -21,6 +21,7 @@ private:
     int width;
     int hight;
     int **arr;
+    bool Gameover;
     list <Rock> lRock;
     list <Diamond> lDiamond;
     list <Enemy> lEnemy;
@@ -32,6 +33,8 @@ public:
     virtual ~Game();
     void import(string filename);
     void Menu(RenderWindow& window);
+    bool GetGameover();
+    void SetGameover();
     void drawBackground(RenderWindow& window);
     void drawRock(RenderWindow& window);
     void drawDiamond(RenderWindow& window);
