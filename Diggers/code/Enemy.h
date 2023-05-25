@@ -17,10 +17,8 @@ private:
 public:
     Enemy();
     Enemy(float x, float y);
-    void SetHP(float hp);
     void SetCordX(float x);
     void SetCordY(float y);
-    float GetHP();
     float GetCordX();
     float GetCordY();
     void move(RenderWindow& window, float x, float y);

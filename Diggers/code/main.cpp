@@ -6,12 +6,12 @@ int main() {
 	RenderWindow window(VideoMode(1200, 800), "Digger");
 	Game game(window); // создание класса game для дальнейшего использования механик игры
 	Music music; // подключаем фоновую музыку
-	music.openFromFile("sound/music.ogg"); 
+	music.openFromFile("sound/music.ogg");  
 	music.play();
 	music.setVolume(5);
 	bool MenuIsOpen = true; // переменная отвечающие за состояние, открыто меню сейчач или нет
 
-	SoundBuffer Game_OverSoundBuffer;
+	SoundBuffer Game_OverSoundBuffer; // звук в случае конца игры
 	Game_OverSoundBuffer.loadFromFile("sound/Game_OverSound.ogg");
 	Sound Game_OverSound(Game_OverSoundBuffer);
 
@@ -28,10 +28,10 @@ int main() {
 		if (MenuIsOpen) { // если меню открыто, то следим за положением курсора и нажатием на лкм
 			game.Menu(window);
 			Vector2i mp = Mouse::getPosition(window);
-			if ((mp.x > 320 && mp.x < 880) && (mp.y > 320 && mp.y < 420) && (Mouse::isButtonPressed(Mouse::Left))){
+			if ((mp.x > 320 && mp.x < 880) && (mp.y > 320 && mp.y < 420) && (Mouse::isButtonPressed(Mouse::Left))){ // кнопка плей
 				MenuIsOpen = false;
 			}
-			else if ((mp.x > 320 && mp.x < 880) && (mp.y > 500 && mp.y < 600) && (Mouse::isButtonPressed(Mouse::Left))) {
+			else if ((mp.x > 320 && mp.x < 880) && (mp.y > 500 && mp.y < 600) && (Mouse::isButtonPressed(Mouse::Left))) { // кнопка выйти из игры
 				window.close();
 			}
 		}
@@ -43,8 +43,8 @@ int main() {
 			View view(FloatRect(0, 0, 1200, 800));
 			view.setCenter(Vector2f(600, 400));
 			window.setView(view);
-			if (Mouse::isButtonPressed(Mouse::Left)){
-				game.Reload();
+			if (Mouse::isButtonPressed(Mouse::Left)){ // перезагрузка игры при нажатии лкм
+				game.Reload(window);
 				MenuIsOpen = true;
 			}
 		}
@@ -74,7 +74,7 @@ int main() {
 			}
 			game.Update(window); // обновление событий в игре
 		}	
-		window.display();
+		window.display(); // вывод конечного кадра на экран
 	}
 	return 0;
 }

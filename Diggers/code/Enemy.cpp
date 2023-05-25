@@ -13,7 +13,6 @@ Enemy::Enemy(){
 Enemy::Enemy(float x, float y)
 {
     // hp
-    this->hp = 20.f;
     this->x = x;
     this->y = y;
     txUp.loadFromFile("img/antUp.png");
@@ -23,10 +22,6 @@ Enemy::Enemy(float x, float y)
     sp.setTexture(txDown);
 }
 // set and get
-void Enemy::SetHP(float hp)
-{
-    this->hp = hp;
-}
 
 void Enemy::SetCordX(float x)
 {
@@ -36,11 +31,6 @@ void Enemy::SetCordX(float x)
 void Enemy::SetCordY(float y)
 {
     this->y = y;
-}
-
-float Enemy::GetHP()
-{
-    return hp;
 }
 
 float Enemy::GetCordX()

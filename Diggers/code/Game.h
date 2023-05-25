@@ -38,7 +38,7 @@ public:
     void import(string filename);
     void Menu(RenderWindow& window);
     bool GetGameover();
-    void Reload();
+    void Reload(RenderWindow& window);
     void drawBackground(RenderWindow& window);
     void drawRock(RenderWindow& window);
     void drawDiamond(RenderWindow& window);

@@ -1,4 +1,7 @@
-﻿  Game.cpp
-D:\Diggers\Diggers\code\Game.cpp(158,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
-D:\Diggers\Diggers\code\Game.cpp(159,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+﻿  Enemy.cpp
+  Game.cpp
+D:\Diggers\Diggers\code\Game.cpp(160,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+D:\Diggers\Diggers\code\Game.cpp(161,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+  main.cpp
+  Создание кода...
   Diggers.vcxproj -> D:\Diggers\Diggers\x64\Debug\Diggers.exe

@@ -68,13 +68,15 @@ bool Game::GetGameover()
     return Gameover;
 }
 
-void Game::Reload()
+void Game::Reload(RenderWindow& window)
 {
     import("map.txt");
     player.SetCordX(100.f);
     player.SetCordY(100.f);
     player.SetHP(100.f);
     player.set_count_of_hits(10);
+    player.move(window, 1, 0);
+    player.move(window, -1, 0);
     this->Gameover = false;
 }
 
