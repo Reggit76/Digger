@@ -14,7 +14,6 @@ private:
     Texture txUp;
     float x;
     float y;
-    float hp;
 public:
     Enemy();
     Enemy(float x, float y);

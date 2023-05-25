@@ -1,7 +1,6 @@
 #include "Enemy.h"
 
 Enemy::Enemy(){
-    this->hp = 20.f;
     this->x = -500.f;
     this->y = -500.f;
     txUp.loadFromFile("img/antUp.png");

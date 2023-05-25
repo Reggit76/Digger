@@ -10,6 +10,11 @@ int main() {
 	music.play();
 	music.setVolume(5);
 	bool MenuIsOpen = true; // переменная отвечающие за состояние, открыто меню сейчач или нет
+
+	SoundBuffer Game_OverSoundBuffer;
+	Game_OverSoundBuffer.loadFromFile("sound/Game_OverSound.ogg");
+	Sound Game_OverSound(Game_OverSoundBuffer);
+
 	while (window.isOpen()) {
 		window.clear();		
 		Event event;
@@ -30,12 +35,16 @@ int main() {
 				window.close();
 			}
 		}
-		else if (!MenuIsOpen && game.GetGameover()) {
+		else if ((!MenuIsOpen) && game.GetGameover()) {
 			Texture tx;
 			tx.loadFromFile("img/Gameover.png");
 			Sprite GameOver(tx);
 			window.draw(GameOver);
+			View view(FloatRect(0, 0, 1200, 800));
+			view.setCenter(Vector2f(600, 400));
+			window.setView(view);
 			if (Mouse::isButtonPressed(Mouse::Left)){
+				game.Reload();
 				MenuIsOpen = true;
 			}
 		}

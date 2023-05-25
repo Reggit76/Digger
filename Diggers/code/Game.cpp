@@ -7,8 +7,12 @@ Game::Game(RenderWindow& window)
     player.move(window, 1, 0);
     player.move(window, -1, 0);
     this->Gameover = false;
-    SoundBf.loadFromFile("DiamondSound.ogg");
-
+    BFDiamond.loadFromFile("sound/DiamondSound.ogg");
+    BFRock.loadFromFile("sound/RockSound.ogg");
+    BFHit.loadFromFile("sound/Hit.ogg");
+    SRock.setBuffer(BFRock);
+    SHit.setBuffer(BFHit);
+    SDiamond.setBuffer(BFDiamond);
 }
 
 Game::~Game()
@@ -59,11 +63,18 @@ void Game::Menu(RenderWindow& window)
 
 bool Game::GetGameover()
 {
+    if (player.GetHP() == 0 || player.get_count_of_hits() == 0)
+        this->Gameover = true;
     return Gameover;
 }
 
-void Game::SetGameover()
+void Game::Reload()
 {
+    import("map.txt");
+    player.SetCordX(100.f);
+    player.SetCordY(100.f);
+    player.SetHP(100.f);
+    player.set_count_of_hits(10);
     this->Gameover = false;
 }
 
@@ -120,6 +131,7 @@ bool Game::removeRock(float x, float y)
     list <Rock>::iterator it;
     for (it = lRock.begin(); it != lRock.end(); it++) {
         if (x == (*it).GetCordX() && y == (*it).GetCordY()) {
+            SRock.play();
             it = lRock.erase(it);
             return true;
         }            
@@ -132,9 +144,7 @@ bool Game::removeDiamond(float x, float y)
     list <Diamond>::iterator it;
     for (it = lDiamond.begin(); it != lDiamond.end(); it++) {
         if (x == (*it).GetCordX() && y == (*it).GetCordY()) {
-            SoundBf.loadFromFile("DiamondSound.mp3");
-            sound.setBuffer(SoundBf);
-            sound.play();
+            SDiamond.play();
             it = lDiamond.erase(it);
             player.set_score((player.get_score()) + 25);
             return true;
@@ -201,6 +211,7 @@ void Game::Update(RenderWindow& window)
         if ((player.GetCordX() == (*it).GetCordX() && player.GetCordY() == (*it).GetCordY()) && 
             (player.get_count_of_hits() > 0 && player.GetHP() > 0)) {
             it = lEnemy.erase(it);
+            SHit.play();
             player.SetHP(player.GetHP() - 20);
             player.set_count_of_hits((player.get_count_of_hits()) - 1);
             continue;

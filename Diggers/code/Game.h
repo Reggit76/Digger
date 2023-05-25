@@ -25,8 +25,12 @@ private:
     list <Rock> lRock;
     list <Diamond> lDiamond;
     list <Enemy> lEnemy;
-    SoundBuffer SoundBf;
-    Sound sound;
+    SoundBuffer BFHit;
+    SoundBuffer BFRock;
+    SoundBuffer BFDiamond;
+    Sound SRock;
+    Sound SHit;
+    Sound SDiamond;
     Player player;
 public:
     Game(RenderWindow& window);
@@ -34,7 +38,7 @@ public:
     void import(string filename);
     void Menu(RenderWindow& window);
     bool GetGameover();
-    void SetGameover();
+    void Reload();
     void drawBackground(RenderWindow& window);
     void drawRock(RenderWindow& window);
     void drawDiamond(RenderWindow& window);
