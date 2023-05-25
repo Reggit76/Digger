@@ -4,7 +4,7 @@ Player::Player()
 {
     /// hp
     hp = 100.f;
-    count_of_hits = 10;
+    count_of_hits = 15;
     score = 0;
     // ������������� ��������� ������� ������ � ��������
     this->x = 100.f;

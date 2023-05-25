@@ -1,9 +1,9 @@
 #include "Enemy.h"
 
 Enemy::Enemy(){
-    this->hp = 20.f;
     this->x = -500.f;
     this->y = -500.f;
+    this->type = 0;
     txUp.loadFromFile("img/antUp.png");
     txDown.loadFromFile("img/antDown.png");
     txRight.loadFromFile("img/antRight.png");
@@ -11,12 +11,11 @@ Enemy::Enemy(){
     sp.setTexture(txDown);
 }
 
-Enemy::Enemy(float x, float y)
+Enemy::Enemy(float x, float y, int type)
 {
-    // hp
-    this->hp = 20.f;
     this->x = x;
     this->y = y;
+    this->type = type;
     txUp.loadFromFile("img/antUp.png");
     txDown.loadFromFile("img/antDown.png");
     txRight.loadFromFile("img/antRight.png");
@@ -24,10 +23,6 @@ Enemy::Enemy(float x, float y)
     sp.setTexture(txDown);
 }
 // set and get
-void Enemy::SetHP(float hp)
-{
-    this->hp = hp;
-}
 
 void Enemy::SetCordX(float x)
 {
@@ -39,9 +34,9 @@ void Enemy::SetCordY(float y)
     this->y = y;
 }
 
-float Enemy::GetHP()
+void Enemy::SetType(int type)
 {
-    return hp;
+    this->type = type;
 }
 
 float Enemy::GetCordX()
@@ -52,6 +47,11 @@ float Enemy::GetCordX()
 float Enemy::GetCordY()
 {
     return y;
+}
+
+int Enemy::GetType()
+{
+    return type;
 }
 
 void Enemy::move(RenderWindow& window, float x, float y)

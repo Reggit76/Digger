@@ -1,12 +1,18 @@
 #include "Game.h"
 
 
-Game::Game(sf::RenderWindow& window)
+Game::Game(RenderWindow& window)
 {
     import("map.txt");
     player.move(window, 1, 0);
     player.move(window, -1, 0);
-    SoundBf.loadFromFile("DiamondSound.ogg");
+    this->Gameover = false;
+    BFDiamond.loadFromFile("sound/DiamondSound.ogg");
+    BFRock.loadFromFile("sound/RockSound.ogg");
+    BFHit.loadFromFile("sound/Hit.ogg");
+    SRock.setBuffer(BFRock);
+    SHit.setBuffer(BFHit);
+    SDiamond.setBuffer(BFDiamond);
 }
 
 Game::~Game()
@@ -37,8 +43,12 @@ void Game::import(string filename)
                 lRock.push_front(Rock(100.f * j, 100.f * i));
             if (bf == 5)
                 lDiamond.push_front(Diamond(100.f * j, 100.f * i));
-            if (bf == 6)
-                lEnemy.push_front(Enemy(100.f * j, 100.f * i));
+            if (bf == 6) {
+                lEnemy.push_front(Enemy(100.f * j, 100.f * i, 0));
+            }
+            if (bf == 7) {
+                lEnemy.push_front(Enemy(100.f * j, 100.f * i, 1));
+            }
         }
     }
     file.close();
@@ -55,7 +65,26 @@ void Game::Menu(RenderWindow& window)
     window.setView(view);
 }
 
-void Game::drawBackground(sf::RenderWindow& window)
+bool Game::GetGameover()
+{
+    if (player.GetHP() == 0 || player.get_count_of_hits() == 0)
+        this->Gameover = true;
+    return Gameover;
+}
+
+void Game::Reload(RenderWindow& window)
+{
+    import("map.txt");
+    player.SetCordX(100.f);
+    player.SetCordY(100.f);
+    player.SetHP(100.f);
+    player.set_count_of_hits(15);
+    player.move(window, 1, 0);
+    player.move(window, -1, 0);
+    this->Gameover = false;
+}
+
+void Game::drawBackground(RenderWindow& window)
 {   
     Texture tx;
     for (int i = 0; i < hight; i++) {
@@ -71,7 +100,7 @@ void Game::drawBackground(sf::RenderWindow& window)
     }
 }
 
-void Game::drawRock(sf::RenderWindow& window)
+void Game::drawRock(RenderWindow& window)
 {   
     list <Rock>::iterator it;
     Texture tx;
@@ -108,6 +137,7 @@ bool Game::removeRock(float x, float y)
     list <Rock>::iterator it;
     for (it = lRock.begin(); it != lRock.end(); it++) {
         if (x == (*it).GetCordX() && y == (*it).GetCordY()) {
+            SRock.play();
             it = lRock.erase(it);
             return true;
         }            
@@ -120,9 +150,7 @@ bool Game::removeDiamond(float x, float y)
     list <Diamond>::iterator it;
     for (it = lDiamond.begin(); it != lDiamond.end(); it++) {
         if (x == (*it).GetCordX() && y == (*it).GetCordY()) {
-            SoundBf.loadFromFile("DiamondSound.mp3");
-            sound.setBuffer(SoundBf);
-            sound.play();
+            SDiamond.play();
             it = lDiamond.erase(it);
             player.set_score((player.get_score()) + 25);
             return true;
@@ -182,16 +210,45 @@ void Game::drawStatus(RenderWindow& window)
     window.draw(text);
 }
 
-void Game::enemyUpdate(RenderWindow& window)
+void Game::Update(RenderWindow& window)
 {
     list <Enemy>::iterator it;
     for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
-        if (player.GetCordX() == (*it).GetCordX() && player.GetCordY() == (*it).GetCordY()) {
-            it = lEnemy.erase(it);
+        if ((player.GetCordX() == (*it).GetCordX() && player.GetCordY() == (*it).GetCordY()) && 
+            (player.get_count_of_hits() > 0)) {
+            if (player.get_count_of_hits()) {
+                player.set_count_of_hits((player.get_count_of_hits()) - 1);
+                it = lEnemy.erase(it);
+            }   
+            SHit.play();
             player.SetHP(player.GetHP() - 20);
-            player.set_count_of_hits((player.get_count_of_hits()) - 1);
             continue;
         }
-        
+        else {
+            if ((*it).GetType() == 0) {
+                if ((*it).GetCordX() > 100.f && (*it).trend == 0) {
+                    (*it).move(window, -1, 0);
+                    continue;
+                } 
+                (*it).trend = 1;
+                if ((*it).GetCordX() < 100.f * (width - 1) && (*it).trend == 1) {
+                    (*it).move(window, 1, 0);
+                    continue;
+                }
+                (*it).trend = 0;
+            }
+            else {
+                if ((*it).GetCordY() > 100.f * (hight - 1) && (*it).trend == 0) {
+                    (*it).move(window, 0, 1);
+                    continue;
+                }
+                (*it).trend = 1;
+                if ((*it).GetCordY() < 100.f && (*it).trend == 1) {
+                    (*it).move(window, 0, -1);
+                    continue;
+                }
+                (*it).trend = 0;
+            }
+        }
     }
 }

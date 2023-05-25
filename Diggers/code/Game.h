@@ -21,17 +21,24 @@ private:
     int width;
     int hight;
     int **arr;
+    bool Gameover;
     list <Rock> lRock;
     list <Diamond> lDiamond;
     list <Enemy> lEnemy;
-    SoundBuffer SoundBf;
-    Sound sound;
+    SoundBuffer BFHit;
+    SoundBuffer BFRock;
+    SoundBuffer BFDiamond;
+    Sound SRock;
+    Sound SHit;
+    Sound SDiamond;
     Player player;
 public:
-    Game(sf::RenderWindow& window);
+    Game(RenderWindow& window);
     virtual ~Game();
     void import(string filename);
     void Menu(RenderWindow& window);
+    bool GetGameover();
+    void Reload(RenderWindow& window);
     void drawBackground(RenderWindow& window);
     void drawRock(RenderWindow& window);
     void drawDiamond(RenderWindow& window);
@@ -41,5 +48,5 @@ public:
     void movePlayer(RenderWindow& window, float x, float y);
     void playerDraw(RenderWindow& window);
     void drawStatus(RenderWindow& window);
-    void enemyUpdate(RenderWindow& window);
+    void Update(RenderWindow& window);
 };
