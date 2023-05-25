@@ -4,13 +4,16 @@
 Game::Game(sf::RenderWindow& window)
 {
     import("map.txt");
-    player.move(window, 1, 1, "Right");
-    player.move(window, -1, -1, "Right");
-    SoundBf.loadFromFile("DiamondSound.mp3");
+    player.move(window, 1, 0);
+    player.move(window, -1, 0);
+    SoundBf.loadFromFile("DiamondSound.ogg");
 }
 
 Game::~Game()
 {
+    for (int i = 0; i < hight; i++) {
+        delete arr[i];
+    }
     delete[] arr;
 }
 
@@ -23,9 +26,9 @@ void Game::import(string filename)
         arr[i] = new int[width];
     }
     int bf;
-    lRock.resize(5);
-    lDiamond.resize(5);
-    lEnemy.resize(3);
+    lRock.resize(10);
+    lDiamond.resize(10);
+    lEnemy.resize(6);
     for (int i = 0; i < hight; i++) {
         for (int j = 0; j < width; j++) {
             file >> bf;
@@ -41,6 +44,17 @@ void Game::import(string filename)
     file.close();
 }
 
+void Game::Menu(RenderWindow& window)
+{
+    Texture tx;
+    tx.loadFromFile("img/MainMenu.png");
+    Sprite sp(tx);
+    window.draw(sp);
+    View view(FloatRect(0, 0, 1200, 800));
+    view.setCenter(Vector2f(600, 400));
+    window.setView(view);
+}
+
 void Game::drawBackground(sf::RenderWindow& window)
 {   
     Texture tx;
@@ -49,7 +63,7 @@ void Game::drawBackground(sf::RenderWindow& window)
             if (arr[i][j] == 9)
                 tx.loadFromFile("img/wall.png");
             else
-                tx.loadFromFile("img/back2.png");
+                tx.loadFromFile("img/back.png");
             Sprite sp(tx);
             sp.setPosition(100.f * j, 100.f * i);
             window.draw(sp);
@@ -117,7 +131,7 @@ bool Game::removeDiamond(float x, float y)
     return false;
 }
 
-void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate)
+void Game::movePlayer(RenderWindow& window, float x, float y)
 {
     int px = player.GetCordX() / 100.f + x;
     int py = player.GetCordY() / 100.f + y;
@@ -133,18 +147,12 @@ void Game::movePlayer(RenderWindow& window, float x, float y, std::string rotate
         arr[py][px] = 0;
         player.set_count_of_hits((player.get_count_of_hits())-1);
     }
-    if (arr[py][px] != 9) {
-        player.move(window, x, y, rotate);
+    if ((arr[py][px] != 9) || (arr[py][px] == 3 && player.get_count_of_hits() > 0)) {
+        player.move(window, x, y);
         View view(FloatRect(0, 0, 1200, 800));
         view.setCenter(Vector2f(player.GetCordX(), player.GetCordY()));
         window.setView(view);
     }
-    /*if (arr[py][px] == 9) {
-        SoundBf.loadFromFile("Wall.mp3");
-        sound.setBuffer(SoundBf);
-        sound.play();
-        player.draw(window);
-    }*/
     else {
         player.draw(window);
     }       
@@ -184,24 +192,6 @@ void Game::enemyUpdate(RenderWindow& window)
             player.set_count_of_hits((player.get_count_of_hits()) - 1);
             continue;
         }
-        int step = rand() % 4;
-        if (step >= 2) {
-            int StepX = (rand() % 3) - 1;
-            int px = abs((*it).GetCordX() / 100.f + StepX);
-            int x = (*it).GetCordX() / 100.f;
-            int y = (*it).GetCordY() / 100.f;
-            //if (arr[y][px] != 9) {
-                (*it).move(window, StepX, 0);
-            //}
-        }
-        else if (step < 2) {
-            int StepY = (rand() % 3) - 1;
-            int py = abs((*it).GetCordY() / 100.f + StepY);
-            int x = (*it).GetCordX() / 100.f;
-            int y = (*it).GetCordY() / 100.f;
-            //if (arr[py][x] != 9) {
-                (*it).move(window, 0, StepY);
-            //}
-        }
+        
     }
 }

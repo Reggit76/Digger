@@ -66,18 +66,18 @@ void Player::set_score(int score)
     this->score = score;
 }
 
-void Player::move(RenderWindow& window, float x, float y, std::string rotate)
+void Player::move(RenderWindow& window, float x, float y)
 {
     SetCordX(GetCordX() + x * 100.f);
     SetCordY(GetCordY() + y * 100.f);
     sp.setPosition(GetCordX(), GetCordY());
-    if (rotate == "Up")
+    if (y == -1)
         sp.setTexture(txUp);
-    if (rotate == "Down")
+    else if (y == 1)
         sp.setTexture(txDown);
-    if (rotate == "Left")
+    if (x == -1)
         sp.setTexture(txLeft);
-    if (rotate == "Right")
+    else if (x == 1)
         sp.setTexture(txRight);
     window.draw(sp);
     sleep(milliseconds(100));

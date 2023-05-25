@@ -31,15 +31,15 @@ public:
     Game(sf::RenderWindow& window);
     virtual ~Game();
     void import(string filename);
+    void Menu(RenderWindow& window);
     void drawBackground(RenderWindow& window);
     void drawRock(RenderWindow& window);
     void drawDiamond(RenderWindow& window);
     void drawEnemy(RenderWindow& window);
     bool removeRock(float x, float y);
     bool removeDiamond(float x, float y);
-    void movePlayer(RenderWindow& window, float x, float y, std::string rotate);
+    void movePlayer(RenderWindow& window, float x, float y);
     void playerDraw(RenderWindow& window);
     void drawStatus(RenderWindow& window);
     void enemyUpdate(RenderWindow& window);
-    
 };
