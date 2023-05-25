@@ -3,7 +3,7 @@
 
 
 int main() {
-	RenderWindow window(sf::VideoMode(1200, 800), "DiggerV2");
+	RenderWindow window(VideoMode(1200, 800), "Digger");
 	Game game(window); // создание класса game дл€ дальнейшего использовани€ механик игры
 	Music music; // подключаем фоновую музыку
 	music.openFromFile("sound/music.ogg"); 

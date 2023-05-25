@@ -28,7 +28,7 @@ private:
     Sound sound;
     Player player;
 public:
-    Game(sf::RenderWindow& window);
+    Game(RenderWindow& window);
     virtual ~Game();
     void import(string filename);
     void Menu(RenderWindow& window);

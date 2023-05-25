@@ -1,7 +1,7 @@
 #include "Game.h"
 
 
-Game::Game(sf::RenderWindow& window)
+Game::Game(RenderWindow& window)
 {
     import("map.txt");
     player.move(window, 1, 0);
@@ -55,7 +55,7 @@ void Game::Menu(RenderWindow& window)
     window.setView(view);
 }
 
-void Game::drawBackground(sf::RenderWindow& window)
+void Game::drawBackground(RenderWindow& window)
 {   
     Texture tx;
     for (int i = 0; i < hight; i++) {
@@ -71,7 +71,7 @@ void Game::drawBackground(sf::RenderWindow& window)
     }
 }
 
-void Game::drawRock(sf::RenderWindow& window)
+void Game::drawRock(RenderWindow& window)
 {   
     list <Rock>::iterator it;
     Texture tx;
@@ -186,11 +186,15 @@ void Game::Update(RenderWindow& window)
 {
     list <Enemy>::iterator it;
     for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
-        if (player.GetCordX() == (*it).GetCordX() && player.GetCordY() == (*it).GetCordY()) {
+        if ((player.GetCordX() == (*it).GetCordX() && player.GetCordY() == (*it).GetCordY()) && 
+            (player.get_count_of_hits() > 0 && player.GetHP() > 0)) {
             it = lEnemy.erase(it);
             player.SetHP(player.GetHP() - 20);
             player.set_count_of_hits((player.get_count_of_hits()) - 1);
             continue;
-        }   
+        }
+        else if (player.GetHP() > 0){
+            player.SetHP(player.GetHP() - 20);
+        }
     }
 }
