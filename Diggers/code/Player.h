@@ -5,7 +5,7 @@
 using namespace sf;
 
 class Player{ 
-private:    // ��� private ���������� ����� ���� �������� ������ ������ �������
+private:
     float x;
     float y;
     int count_of_hits;
@@ -17,11 +17,9 @@ private:    // ��� private ���������� ����� 
     Texture txUp;
     Sprite sp;
     int score;
-public:    // �������� ������
+public:
 
-    // ����������� ������ � ������������
     Player();
-    // ���� � ���� ��� ��
 
     int get_score();
     void set_score(int score);
@@ -33,6 +31,6 @@ public:    // �������� ������
     float GetHP();
     float GetCordX();
     float GetCordY();
-    void move(RenderWindow& window, float x, float y, std::string rotate);
+    void move(RenderWindow& window, float x, float y);
     void draw(RenderWindow& window);
 };
