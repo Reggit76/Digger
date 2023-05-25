@@ -43,8 +43,12 @@ void Game::import(string filename)
                 lRock.push_front(Rock(100.f * j, 100.f * i));
             if (bf == 5)
                 lDiamond.push_front(Diamond(100.f * j, 100.f * i));
-            if (bf == 6)
-                lEnemy.push_front(Enemy(100.f * j, 100.f * i));
+            if (bf == 6) {
+                lEnemy.push_front(Enemy(100.f * j, 100.f * i, 0));
+            }
+            if (bf == 7) {
+                lEnemy.push_front(Enemy(100.f * j, 100.f * i, 1));
+            }
         }
     }
     file.close();
@@ -74,7 +78,7 @@ void Game::Reload(RenderWindow& window)
     player.SetCordX(100.f);
     player.SetCordY(100.f);
     player.SetHP(100.f);
-    player.set_count_of_hits(10);
+    player.set_count_of_hits(15);
     player.move(window, 1, 0);
     player.move(window, -1, 0);
     this->Gameover = false;
@@ -211,15 +215,40 @@ void Game::Update(RenderWindow& window)
     list <Enemy>::iterator it;
     for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
         if ((player.GetCordX() == (*it).GetCordX() && player.GetCordY() == (*it).GetCordY()) && 
-            (player.get_count_of_hits() > 0 && player.GetHP() > 0)) {
-            it = lEnemy.erase(it);
+            (player.get_count_of_hits() > 0)) {
+            if (player.get_count_of_hits()) {
+                player.set_count_of_hits((player.get_count_of_hits()) - 1);
+                it = lEnemy.erase(it);
+            }   
             SHit.play();
             player.SetHP(player.GetHP() - 20);
-            player.set_count_of_hits((player.get_count_of_hits()) - 1);
             continue;
         }
-        else if ((player.get_count_of_hits() == 0 && player.GetHP() > 0)){
-            player.SetHP(player.GetHP() - 20);
+        else {
+            if ((*it).GetType() == 0) {
+                if ((*it).GetCordX() > 100.f && (*it).trend == 0) {
+                    (*it).move(window, -1, 0);
+                    continue;
+                } 
+                (*it).trend = 1;
+                if ((*it).GetCordX() < 100.f * (width - 1) && (*it).trend == 1) {
+                    (*it).move(window, 1, 0);
+                    continue;
+                }
+                (*it).trend = 0;
+            }
+            else {
+                if ((*it).GetCordY() > 100.f * (hight - 1) && (*it).trend == 0) {
+                    (*it).move(window, 0, 1);
+                    continue;
+                }
+                (*it).trend = 1;
+                if ((*it).GetCordY() < 100.f && (*it).trend == 1) {
+                    (*it).move(window, 0, -1);
+                    continue;
+                }
+                (*it).trend = 0;
+            }
         }
     }
 }

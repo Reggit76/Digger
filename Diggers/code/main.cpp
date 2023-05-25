@@ -10,6 +10,7 @@ int main() {
 	music.play();
 	music.setVolume(5);
 	bool MenuIsOpen = true; // переменная отвечающие за состояние, открыто меню сейчач или нет
+	window.setFramerateLimit(35);
 
 	SoundBuffer Game_OverSoundBuffer; // звук в случае конца игры
 	Game_OverSoundBuffer.loadFromFile("sound/Game_OverSound.ogg");
