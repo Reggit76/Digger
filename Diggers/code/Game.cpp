@@ -99,7 +99,7 @@ void Game::drawEnemy(RenderWindow& window)
 {
     list <Enemy>::iterator it;
     for (it = lEnemy.begin(); it != lEnemy.end(); it++) {
-        
+        (*it).draw(window);
     }
 }
 
